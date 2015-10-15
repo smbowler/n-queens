@@ -212,7 +212,7 @@
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
         //Save the input as a variable
-      var startIndex = majorDiagonalColumnIndexAtFirstRow;
+      var startIndex = minorDiagonalColumnIndexAtFirstRow;
       //Access the rows
       var rows = this.rows();
       //Initialize a count variable
