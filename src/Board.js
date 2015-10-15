@@ -79,11 +79,35 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
+      //Access the row
+      var row = this.get(rowIndex);
+      //Declar count variable
+      var count = 0;
+      //Iterate over the row
+      for (var i = 0; i < row.length; i++){
+        //Count variable and each time we find the value of one, increment count variable
+        if (row[i] === 1){
+          count++;
+        }
+        //If count > 1, return true 
+        if (count > 1){
+          return true;
+        }
+      }
       return false; // fixme
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+    
+      var rows = this.rows();
+
+      for( var i = 0; i < rows.length; i++ ){
+        if( this.hasRowConflictAt(i) ){
+          return true;
+        }
+      }
+
       return false; // fixme
     },
 
@@ -94,11 +118,43 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      // get all row arrays
+      var rows = this.rows();
+      var colArray = [];
+      // go to each array
+      for( var i = 0; i < rows.length; i++ ){
+      // take the index from each array, push it into array
+        colArray.push(rows[i][colIndex]);
+      }
+      console.log(colArray);
+
+      // call hasRowConflictsAt on each row
+      var count = 0;
+      //Iterate over the row
+      for (var j = 0; j < colArray.length; j++){
+        //Count variable and each time we find the value of one, increment count variable
+        if (colArray[j] === 1){
+          count++;
+        }
+        //If count > 1, return true 
+        if (count > 1){
+          return true;
+        }
+      }
+
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      var rows = this.rows();
+
+      for( var i = 0; i < rows.length; i++ ){
+        if(this.hasColConflictAt(i)){
+          return true;
+        }
+      }
+
       return false; // fixme
     },
 
@@ -109,11 +165,43 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      //Save the input as a variable
+      var startIndex = majorDiagonalColumnIndexAtFirstRow;
+      //Access the rows
+      var rows = this.rows();
+      //Initialize a count variable
+      var count = 0;
+      //Iterate over the rows
+      for (var i = 0; i < rows.length; i++){
+        var currentRow = row[i];
+        //if statement to check if the spot at currentRow[startIndex]=== 1
+          if (currentRow[startIndex] === 1){
+            //increment count;
+            count++;
+          }
+          startIndex++;
+      }
+      if (count > 1){
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      var rows = this.rows();
+      
+      for( var i = 0; i < rows.length; i++ ){
+        var colIndex = rows[i];
+
+        for( var j = 0; j < colIndex; j++ ){
+          if( this.hasMajorDiagonalConflictAt(j) ){
+            return true;
+          }
+        }
+
+      } 
+
       return false; // fixme
     },
 
