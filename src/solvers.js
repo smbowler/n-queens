@@ -14,10 +14,28 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  var solution = new Board({n: n}); //fixme
+  var numberOfRooks = n;
+  var rows = solution.rows();
 
+  for( var i = 0; i < rows.length; i++ ){
+    var currentRow = rows[i];
+
+    for( var j = 0; j < currentRow.length; j++ ){
+      solution.togglePiece(i, j);
+      if (solution.hasRowConflictAt(i) || solution.hasColConflictAt(j)){
+        solution.togglePiece(i, j);
+        continue;
+      }
+      numberOfRooks--;
+    }
+
+  }
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  return solution;
+  if (numberOfRooks === 0){
+    return rows;
+  }
+  return 'Error';
 };
 
 
@@ -25,9 +43,41 @@ window.findNRooksSolution = function(n) {
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
   var solutionCount = undefined; //fixme
+  var solutions = [];
+  var startingPoint = new Board({n: n});
+  //create an emptyboard
 
+  var recursion = function(rowIndex, colIndex, currentBoard){
+    //termination equation
+
+
+    //base case
+
+      //if numberofRooks === n
+
+        //push currentboard into solutions
+
+        //return;
+
+    //iterate over all the rows
+
+      //iterate over each index in each row
+
+        //currentBoard after toggle on & check for conflicts 
+
+        //call recursive function(currentBoard) (do something to numberOfRooks) on each board spot.
+
+        //this.togglePiece(i, j) off 
+        
+          //decrement numberofRooks
+
+
+  }
+   //call the recursive function();
+
+  
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
-  return solutionCount;
+  return solutions.length;
 };
 
 
