@@ -42,42 +42,64 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
   var solutions = [];
-  var startingPoint = new Board({n: n});
-  //create an emptyboard
+  var solutionCount = solutions.length; //fixme
+  var board = new Board({n: n});
+  board.rookCounter = 0;
+  
+  //edge case of n = 1
+  if( n === 1 ){
+    solutionCount = 1;
+    return solutionCount;
+  }
 
-  var recursion = function(rowIndex, colIndex, currentBoard){
-    //termination equation
+  var recursion = function(rowIndex, colIndex, board){
 
+    //if numberofRooks === n
+    // numberOfRooks = numberOfRooks || n;
+    console.log('number of rooks', board.rookCounter);
 
     //base case
-
-      //if numberofRooks === n
-
-        //push currentboard into solutions
-
-        //return;
-
+    if (board.rookCounter === n){
+      solutions.push(board);
+      for (var k = 0; k < solutions.length; k++){
+        console.log('solutions are', solutions[k].rows());
+      }
+      
+      return;
+    }
+    //termination statement
+    if (rowIndex === n && colIndex === n){
+      return;
+    }
     //iterate over all the rows
-
-      //iterate over each index in each row
-
+    var rows = board.rows();
+    for (var i = rowIndex; i < rows.length; i++){
+      //access each row
+      var currentRow = rows[i];
+      //iterate over current row
+      for (var j = 0; j < currentRow.length; j++){
+        board.togglePiece(i, j);
+        board.rookCounter++;
+        console.log(i, 'is', board.get(i));
         //currentBoard after toggle on & check for conflicts 
-
-        //call recursive function(currentBoard) (do something to numberOfRooks) on each board spot.
-
-        //this.togglePiece(i, j) off 
-        
-          //decrement numberofRooks
-
-
+        if (!board.hasRowConflictAt(i) && !board.hasColConflictAt(j)){
+          //call recursive function(currentBoard) (do something to numberOfRooks) on each board spot.
+          recursion(i+1, j, board);
+        }
+        //toggles piece off 
+        board.togglePiece(i,j);
+        board.rookCounter--;
+      }
+    }
+    return;
   }
-   //call the recursive function();
+  //call the recursive function();
+  recursion(0, 0, board);
 
   
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
-  return solutions.length;
+  return solutionCount;
 };
 
 
